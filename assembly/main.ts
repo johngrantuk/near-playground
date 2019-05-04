@@ -1,45 +1,37 @@
 import "allocator/arena";
 export { memory };
 
-import { context, storage, near } from "./near";
-
-import { Chunk, ChunkMap } from "./model.near"
+import { context, storage, near, collections } from "./near";
 
 // --- contract code goes below
 
+// let user_clicks = collections.map<string, u64>("a:");
+let user_clicks  = collections.topN<string>("a");
+// https://docs.nearprotocol.com/client-api/ts/classes/collections/topn
+//  getRating(key: K, defaultRating?: i32)
+// getTop(limit: i32)
+// incrementRating(key: K, increment?: i32)
 
-export function setPixel(x: i32, y: i32, rgb: string): string {
-  let chunk = getChunk(x, y);
-  chunk.setPixel(x, y, rgb);
-  storage.setBytes(Chunk.key(x, y), chunk.encode());
-  let map = _getMap();
-  map.setChunk(x, y, chunk);
-  storage.setBytes('chunkMap', map.encode());
-  return "Sender! " + context.sender;
+export function init(): void {
+
+  storage.setU64("total_clicks", 0);
 }
 
-export function getChunk(x: i32, y: i32): Chunk {
-  let chunkKey = Chunk.key(x, y);
-  let chunkBytes = storage.getBytes(chunkKey);
-  if (chunkBytes == null) {
-    return new Chunk();
-  }
-  return Chunk.decode(chunkBytes);
+export function totalClicks(): u64 {
+  near.log("JOHNS TEST");
+  near.log(context.sender);
+  return storage.getU64("total_clicks");
 }
 
-export function getMap(): i32[][] {
-  return _getMap().chunks;
+export function addClick(): boolean {
+  storage.setU64("total_clicks", storage.getU64("total_clicks") + 1);
+  near.log("Addding click for : " + context.sender);
+  user_clicks.incrementRating(context.sender);
+  return true;
 }
 
-function _getMap(): ChunkMap {
-  let mapBytes = storage.getBytes('chunkMap');
-  if (mapBytes == null) {
-    return new ChunkMap();
-  }
-  return ChunkMap.decode(mapBytes);
-}
+export function getUserClicks(user: string): u64 {
+  near.log("User: " + user);
 
-export function getMessage(): string {
-  // var sender = context.getSender();
-  return "Hello Johns World! ";
+  return user_clicks.getRating(user, 0);
 }
