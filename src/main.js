@@ -5,7 +5,7 @@ async function initContract() {
   console.log("nearConfig", nearConfig);
   nearplace.near = await nearlib.dev.connect(nearConfig);
   nearplace.contract = await nearplace.near.loadContract(nearConfig.contractName, {
-    viewMethods: ["getMap", "getChunk"],
+    viewMethods: ["getMap", "getChunk", "getMessage"],
     changeMethods: ["setPixel"],
     sender: nearlib.dev.myAccountId
   });
@@ -83,7 +83,7 @@ function getMousepos(canvas, evt){
   };
 }
 
-function myCanvasClick(e) {
+async function myCanvasClick(e) {
   const canvas = document.getElementById("myCanvas");
   const ctx = canvas.getContext("2d");
   const position = getMousepos(canvas, e);
@@ -96,16 +96,45 @@ function myCanvasClick(e) {
 
   setPixelQueue.push({ x, y, rgb });
   function setNextPixel() {
-    nearplace.contract.setPixel(setPixelQueue[0]).finally(() => {
+    nearplace.contract.setPixel(setPixelQueue[0]).then(function(response){
+      console.log('ok?')
+      console.log(response)
+    }).finally(() => {
       setPixelQueue.splice(0, 1);
       if (setPixelQueue.length == 0) {
         loadBoardAndDraw();
       } else {
         setNextPixel();
-      } 
+      }
     });
   }
+
   if (setPixelQueue.length == 1) {
     setNextPixel();
   }
+}
+
+let timer;
+var isOn = false;
+
+async function myButtonClick(e) {
+  console.log('1');
+  // var test = await nearplace.contract.getMessage();
+  if(isOn)
+    clearTimeout(timer);
+
+  if(!isOn){
+    toggleSign(isOn);
+    isOn = true;
+  }
+
+  timer = setTimeout(toggleSign, 5000);
+  // var test = await nearplace.contract.setPixel(setPixelQueue[0]);
+  // console.log(test);
+}
+
+function toggleSign(){
+  $(".sign-jumbotron").toggleClass("sign-on sign-off");
+  $(".sign-message").toggleClass("neon");
+  isOn = false;
 }

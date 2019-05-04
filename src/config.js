@@ -1,5 +1,5 @@
 (function() {
-    const CONTRACT_NAME = 'near-place';
+    const CONTRACT_NAME = 'johnstest';
     const DEFAULT_ENV = 'development';
 
     function getConfig(env) {

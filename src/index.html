@@ -6,9 +6,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
   <script src="https://cdn.jsdelivr.net/npm/nearlib@0.5.4/dist/nearlib.js"></script>
-  <title>NEAR PLACE</title>
+  <title>NEAR PLAYGROUND</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <script
+		  src="https://code.jquery.com/jquery-3.4.1.min.js"
+		  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+		  crossorigin="anonymous"></script>
   <style>
     .glyphicon-refresh-animate {
             -animation: spin .7s infinite linear;
@@ -37,7 +42,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">NEAR PLACE</a>
+            <a class="navbar-brand" href="#">NEAR PLAYGROUND</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
@@ -50,6 +55,17 @@
     </nav>
 
     <div class="container" role="main">
+
+      <button id='johns' type="button" class="btn btn-default" onclick="myButtonClick(event);">Left</button>
+
+        <div class="jumbotron sign-jumbotron sign-on">
+            <h1 class="sign-message neon">THE MESSAGE <br> ok what is this?</h1>
+        </div>
+
+        <div class="jumbotron sign-jumbotron sign-off">
+            <h1 class="sign-message">THE MESSAGE <br> ok what is this?</h1>
+        </div>
+
         <div class="jumbotron">
             <h1>PLACE</h1>
             <p>Imagine drawing <b>forever</b> on the blockchain.</p>
