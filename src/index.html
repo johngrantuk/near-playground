@@ -56,35 +56,42 @@
 
     <div class="container" role="main">
 
-      <button id='johns' type="button" class="btn btn-default" onclick="myButtonClick(event);">Left</button>
-
-        <div class="jumbotron sign-jumbotron sign-on">
-            <h1 class="sign-message neon">THE MESSAGE <br> ok what is this?</h1>
-        </div>
-
-        <div class="jumbotron sign-jumbotron sign-off">
-            <h1 class="sign-message">THE MESSAGE <br> ok what is this?</h1>
-        </div>
-
         <div class="jumbotron">
-            <h1>PLACE</h1>
-            <p>Imagine drawing <b>forever</b> on the blockchain.</p>
-          </div>
-        <div align="center">
-        <canvas
-          id="myCanvas"
-          class="drawingboard",
-          width="800"
-          height="800"
-          onclick="myCanvasClick(event);"
-          style="border:1px solid #000000;"></canvas>
-        </canvas>
+            
+            <div class="jumbotron sign-jumbotron sign-off">
+                <h1 class="sign-message">THE MESSAGE <br> ok what is this?</h1>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4">
+                <h3>Enter The Message</h3>
+                <p>Click <b>forever</b> message.</p>
+                <button id='johns' type="button" class="btn btn-default" onclick="myButtonClick(event);">Left</button>
+              </div>
+              <div class="col-md-8">
+                <h3>Craziest Clickers</h3>
+                <div class="table-responsive">
+                  <table class="table">
+                      <tr>
+                        <th>User</th>
+                        <th>No Clicks</th>
+                      </tr>
+                      <tr>
+                        <td>Me</td>
+                        <td>20</td>
+                      </tr>
+                      <tr>
+                        <td>You</td>
+                        <td>19</td>
+                      </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
         </div>
-        <div align="center">
-        <input class="jscolor" id="picker" value="ab2567">
+
     </div>
   <script src="./config.js"></script>
   <script src="./main.js"></script>
-  <script src="jscolor.js"></script>
   </body>
 </html>
