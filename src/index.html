@@ -52,6 +52,7 @@
             </ul>
         </div><!--/.nav-collapse -->
         </div>
+
     </nav>
 
     <div class="container" role="main">
@@ -63,18 +64,23 @@
             </div>
 
             <div align="center">
-              <button id='johns' type="button" class="btn btn-success" onclick="myButtonClick(event);">CLICK ME!</button>
+              <button id='johns' type="button" class="btn btn-success" onclick="clickButton(event);">CLICK ME!</button>
               <h5>Your Clicks: <span id='your-clicks'>0<span></h5>
             </div>
 
             <div class="row">
+
+              <div id='success-alert' class="alert alert-success" role="alert">🤘 Your Message Is Now On The Blockchain 😎<br>💡 Maybe You Should Have A Wee Click To Check? 💡</div>
+              <div id='fail-alert' class="alert alert-warning" role="alert">🤔 I Think You Need Some More Clicks<br>💡 Go On, Have A Click 💡</div>
+
               <div class="col-md-5">
-                <h3>Enter The Message</h3>
-                <p>Click <b>forever</b> message.</p>
+                <h3>Enter Your Message</h3>
+                <p>Let <b>your</b> message be seen. <br>
+                (Although you'll burn <span id='required_clicks'>1</span> clicks to do it)</p>
 
                 <input id='message' type="text" class="form-control" placeholder="Search for...">
                 <br>
-                <button id='johns' class="btn btn-primary" type="button" onclick="add_message(event);">ADD YOUR MESSAGE</button>
+                <button id='johns' class="btn btn-primary" type="button" onclick="addMessage(event);">ADD YOUR MESSAGE</button>
 
               </div>
               <div class="col-md-7">

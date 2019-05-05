@@ -5,13 +5,13 @@ async function initContract() {
   console.log("nearConfig", nearConfig);
   nearplace.near = await nearlib.dev.connect(nearConfig);
   nearplace.contract = await nearplace.near.loadContract(nearConfig.contractName, {
-    viewMethods: ["totalClicks", "getUserClicks", "getTopTen", "getMessage"],
+    viewMethods: ["totalClicks", "getUserClicks", "getTopTen", "getMessage", "getRequiredUserMessageClicks"],
     changeMethods: ["addClick", "addMessage"],
     sender: nearlib.dev.myAccountId
   });
 
   console.log(nearlib.dev.myAccountId);
-  getTotalClicks();
+  updatePage();
   nearplace.timedOut = false;
   const timeOutPeriod = 10 * 60 * 1000; // 10 min
   setTimeout(() => { nearplace.timedOut = true; }, timeOutPeriod);
@@ -25,20 +25,31 @@ function sleep(time) {
 
 let initPromise = initContract().catch(console.error);
 
-async function getTotalClicks(){
-  console.log('GEtting clicks...')
+async function updatePage(){
+
+  $('#success-alert').hide();
+  $('#fail-alert').hide();
+  // Update the various metrics, etc
   var total_clicks = await nearplace.contract.totalClicks();
-  console.log(total_clicks)
+  console.log('Total Clicks: ' + total_clicks);
   $("#totalClicks").text(total_clicks);
 
   var your_clicks = await nearplace.contract.getUserClicks({ user: nearlib.dev.myAccountId });
   $("#your-clicks").text(your_clicks);
+  console.log('User Clicks: ' + your_clicks);
+
+  var message = await nearplace.contract.getMessage();
+  $('.sign-message').html(message);
+  console.log('Message: ' + message)
+
+  var required_clicks = await nearplace.contract.getRequiredUserMessageClicks();
+  $('#required_clicks').text(required_clicks);
+  console.log('Required Clicks: ' + required_clicks);
 
   var top_ten = await nearplace.contract.getTopTen();
   $("#score_table").find("tr:gt(0)").remove();
-  console.log(top_ten)
 
-  console.log('keys')
+  console.log('Top Ten: ')
   for(key in top_ten){
     var clicks = await nearplace.contract.getUserClicks({ user: top_ten[key] });
 
@@ -47,21 +58,16 @@ async function getTotalClicks(){
     var row = '<tr><td>' + top_ten[key] + '</td><td>' + clicks + '</td></tr>';
     $('#score_table').append(row);
   }
-
-  console.log('Getting Message...');
-  var message = await nearplace.contract.getMessage();
-  console.log(message)
-  $('.sign-message').html(message);
 }
-
 
 let timer;
 var isOn = false;
 
-async function myButtonClick(e) {
+async function clickButton(e) {
 
-  var message = $("#message").val();
-
+  $('#success-alert').hide();
+  $('#fail-alert').hide();
+  // Turns the sign 'on' for 5 seconds and updates the user with a click
   if(isOn)
     clearTimeout(timer);
 
@@ -73,19 +79,27 @@ async function myButtonClick(e) {
   timer = setTimeout(toggleSign, 5000);
   await nearplace.contract.addClick();
 
-  getTotalClicks();
+  updatePage();
 }
 
-async function add_message(e) {
+async function addMessage(e) {
 
   var message = $("#message").val();
 
   console.log('Adding Message: ' + message)
   var result = await nearplace.contract.addMessage({ message: message });
 
-  console.log('Result: ')
-  console.log(result)
-  $('.sign-message').html(message);
+  console.log('Result: ');
+  console.log(result);
+
+  if(result.lastResult == true){
+    // Means the message has been all good
+    updatePage();
+    $('#success-alert').show();
+  }else{
+    // Problem time
+    $('#fail-alert').show();
+  }
 
 }
 

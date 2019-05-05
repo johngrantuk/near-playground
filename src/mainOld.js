@@ -117,7 +117,7 @@ async function myCanvasClick(e) {
 let timer;
 var isOn = false;
 
-async function myButtonClick(e) {
+async function clickButton(e) {
   console.log('1');
   // var test = await nearplace.contract.getMessage();
   if(isOn)
