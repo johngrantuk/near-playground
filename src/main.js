@@ -29,6 +29,7 @@ async function updatePage(){
 
   $('#success-alert').hide();
   $('#fail-alert').hide();
+  $("#who").text(nearlib.dev.myAccountId);
   // Update the various metrics, etc
   var total_clicks = await nearplace.contract.totalClicks();
   console.log('Total Clicks: ' + total_clicks);
@@ -42,7 +43,7 @@ async function updatePage(){
   $('.sign-message').html(message);
   console.log('Message: ' + message)
 
-  var required_clicks = await nearplace.contract.getRequiredUserMessageClicks();
+  var required_clicks = await nearplace.contract.getRequiredUserMessageClicks({ user: nearlib.dev.myAccountId });
   $('#required_clicks').text(required_clicks);
   console.log('Required Clicks: ' + required_clicks);
 
