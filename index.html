@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <script src="https://cdn.jsdelivr.net/npm/nearlib@0.5.4/dist/nearlib.js"></script>
+  <title>NEAR PLAYGROUND</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <script
+		  src="https://code.jquery.com/jquery-3.4.1.min.js"
+		  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+		  crossorigin="anonymous"></script>
+  <style>
+    .glyphicon-refresh-animate {
+            -animation: spin .7s infinite linear;
+            -webkit-animation: spin2 .7s infinite linear;
+    }
+
+    @-webkit-keyframes spin2 {
+            from { -webkit-transform: rotate(0deg);}
+            to { -webkit-transform: rotate(360deg);}
+    }
+
+    @keyframes spin {
+            from { transform: scale(1) rotate(0deg);}
+            to { transform: scale(1) rotate(360deg);}
+    }
+  </style>
+  </head>
+  <body style="padding-top: 70px; padding-bottom: 30px;">
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">NEAR PLAYGROUND</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+            <li><a target="_blank" rel="noopener noreferrer" href="https://github.com/johngrantuk/near-playground">About</a></li>
+            </ul>
+        </div><!--/.nav-collapse -->
+        </div>
+
+    </nav>
+
+    <div class="container" role="main">
+
+        <div class="jumbotron">
+
+            <div class="jumbotron sign-jumbotron sign-off">
+                <h1 class="sign-message">THE MESSAGE IS UNWRITTEN</h1>
+            </div>
+
+            <div align="center">
+              <button id='johns' type="button" class="btn btn-success" onclick="clickButton(event);">CLICK ME!</button>
+              <h5>You Are: <span id='who'>0<span></h5>
+              <h5>Your Clicks: <span id='your-clicks'>0<span></h5>
+            </div>
+
+            <div class="row">
+
+              <div id='success-alert' class="alert alert-success" role="alert">🤘 Your Message Is Now On The Blockchain - 💡 Maybe You Should Have A Wee Click To Check? 😎</div>
+              <div id='fail-alert' class="alert alert-warning" role="alert">🤔 I Think You Need Some More Clicks - Go On, Have A Click 💡</div>
+
+              <div class="col-md-5">
+                <h3>Enter Your Message</h3>
+                <p>Let <b>your</b> message be seen. <br>
+                (Although you'll burn <span id='required_clicks'>1</span> clicks to do it)</p>
+
+                <input id='message' type="text" class="form-control" placeholder="Search for...">
+                <br>
+                <button id='johns' class="btn btn-primary" type="button" onclick="addMessage(event);">ADD YOUR MESSAGE</button>
+
+              </div>
+              <div class="col-md-7">
+                <h3>Top Clickers</h3>
+                <h5>Total Clicks: <span id='totalClicks'>0<span></h5>
+                <div class="table-responsive">
+                  <table id="score_table" class="table">
+                      <tr>
+                        <th>User</th>
+                        <th>No Clicks</th>
+                      </tr>
+                      <tr>
+                        <td>Me</td>
+                        <td>20</td>
+                      </tr>
+                      <tr>
+                        <td>You</td>
+                        <td>19</td>
+                      </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+        </div>
+
+    </div>
+  <script src="./config.js"></script>
+  <script src="./main.js"></script>
+  </body>
+</html>
