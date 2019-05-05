@@ -1,6 +1,4 @@
-Add count for individual users
 Need input and contract code for message input
-Implement leader table stuff
 Event - would be cool to light sign when other people click
 Add wallet integration
 

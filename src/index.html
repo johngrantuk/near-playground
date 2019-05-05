@@ -59,20 +59,29 @@
         <div class="jumbotron">
 
             <div class="jumbotron sign-jumbotron sign-off">
-                <h1 class="sign-message">THE MESSAGE <br> ok what is this?</h1>
+                <h1 class="sign-message">THE MESSAGE IS UNWRITTEN</h1>
+            </div>
+
+            <div align="center">
+              <button id='johns' type="button" class="btn btn-success" onclick="myButtonClick(event);">CLICK ME!</button>
+              <h5>Your Clicks: <span id='your-clicks'>0<span></h5>
             </div>
 
             <div class="row">
-              <div class="col-md-4">
+              <div class="col-md-5">
                 <h3>Enter The Message</h3>
                 <p>Click <b>forever</b> message.</p>
-                <button id='johns' type="button" class="btn btn-default" onclick="myButtonClick(event);">Left</button>
+
+                <input id='message' type="text" class="form-control" placeholder="Search for...">
+                <br>
+                <button id='johns' class="btn btn-primary" type="button" onclick="add_message(event);">ADD YOUR MESSAGE</button>
+
               </div>
-              <div class="col-md-8">
-                <h3>Craziest Clickers</h3>
+              <div class="col-md-7">
+                <h3>Top Clickers</h3>
                 <h5>Total Clicks: <span id='totalClicks'>0<span></h5>
                 <div class="table-responsive">
-                  <table class="table">
+                  <table id="score_table" class="table">
                       <tr>
                         <th>User</th>
                         <th>No Clicks</th>

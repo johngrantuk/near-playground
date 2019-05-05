@@ -35,3 +35,19 @@ export function getUserClicks(user: string): u64 {
 
   return user_clicks.getRating(user, 0);
 }
+
+export function getTopTen(): Array<String> {
+  return user_clicks.getTop(10);
+}
+
+export function addMessage(message: string): bool {
+  near.log("Updating Message User: " + context.sender);
+  near.log(message);
+
+  storage.setString("message", message);
+  return true;
+}
+
+export function getMessage(): String {
+  return storage.getString("message");
+}
