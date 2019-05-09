@@ -1,5 +1,10 @@
 // Loads nearlib and this contract into nearplace scope.
 nearplace = {};
+let refreshTimeout;
+let message;
+let timer;
+var isOn = false;
+var isFirst = true;
 
 async function initContract() {
   console.log("nearConfig", nearConfig);
@@ -12,6 +17,9 @@ async function initContract() {
 
   console.log(nearlib.dev.myAccountId);
   updatePage();
+  setTimeout(() => {
+    refreshMessage();
+  }, 1000);
   nearplace.timedOut = false;
   const timeOutPeriod = 10 * 60 * 1000; // 10 min
   setTimeout(() => { nearplace.timedOut = true; }, timeOutPeriod);
@@ -39,7 +47,7 @@ async function updatePage(){
   $("#your-clicks").text(your_clicks);
   console.log('User Clicks: ' + your_clicks);
 
-  var message = await nearplace.contract.getMessage();
+  message = await nearplace.contract.getMessage();
   $('.sign-message').html(message);
   console.log('Message: ' + message)
 
@@ -61,40 +69,50 @@ async function updatePage(){
   }
 }
 
-let timer;
-var isOn = false;
-
 async function clickButton(e) {
+  // Normal click button - user clicks this to see the message for 5secs and log a click on chain
 
-  $('#success-alert').hide();
+  $('#success-alert').hide();                                                 // These are the alerts shown when a user tries to update the message
   $('#fail-alert').hide();
-  // Turns the sign 'on' for 5 seconds and updates the user with a click
-  if(isOn)
-    clearTimeout(timer);
 
-  if(!isOn){
-    toggleSign(isOn);
+  flashSign();
+
+  await nearplace.contract.addClick();                                        // Add the click to chain
+
+  updatePage();                                                               // Update the UI
+}
+
+function toggleSign(){
+  // Sorts css for sign on/off
+  $(".sign-jumbotron").toggleClass("sign-on sign-off");
+  $(".sign-message").toggleClass("neon");
+  isOn = false;
+}
+
+function flashSign(){
+  if(isOn){
+    clearTimeout(timer);                                                      // If the sign is already on this resets the timer so it stays on for another 5 sec
+  }else{
+    toggleSign(isOn);                                                         // Turns the sign 'on'
     isOn = true;
   }
 
-  timer = setTimeout(toggleSign, 5000);
-  await nearplace.contract.addClick();
-
-  updatePage();
+  timer = setTimeout(toggleSign, 3000);                                       // Sign is now 'on' so set a timer to turn it off in 5 seconds
 }
 
 async function addMessage(e) {
 
-  var message = $("#message").val();
+  var newMessage = $("#message").val();
 
-  console.log('Adding Message: ' + message)
-  var result = await nearplace.contract.addMessage({ message: message });
+  console.log('Adding Message: ' + newMessage)
+  var result = await nearplace.contract.addMessage({ message: newMessage });
 
   console.log('Result: ');
   console.log(result);
 
   if(result.lastResult == true){
     // Means the message has been all good
+    message = newMessage;
     updatePage();
     $('#success-alert').show();
   }else{
@@ -104,8 +122,38 @@ async function addMessage(e) {
 
 }
 
-function toggleSign(){
-  $(".sign-jumbotron").toggleClass("sign-on sign-off");
-  $(".sign-message").toggleClass("neon");
-  isOn = false;
+
+async function refreshMessage() {
+  console.log('refreshing')
+  // Calls view function on the contract and sets up timeout to be called again in 5 seconds
+  // It only calls the contract if the this page/tab is active.
+
+  // Checking if the page is not active and exits without requesting messages from the chain
+  // to avoid unnecessary queries to the devnet.
+  if (document.hidden) {
+    return;
+  }
+
+  // If we already have a timeout scheduled, cancel it
+  if (!!refreshTimeout) {
+    clearTimeout(refreshTimeout);
+    refreshTimeout = null;
+  }
+
+  var newMessage = await nearplace.contract.getMessage();
+
+  if(newMessage != message){
+    if(isFirst == false){
+      $('.sign-message').html(newMessage);                             // // get the message from the contract
+      console.log('Message: ' + newMessage);
+      flashSign();                                                  // show message if its new
+      message = newMessage;
+    }else{
+      isFirst = false;
+    }
+  }
+
+  // Schedules a new timeout
+  refreshTimeout = setTimeout(refreshMessage, 2000);
+
 }
