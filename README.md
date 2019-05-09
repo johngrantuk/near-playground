@@ -66,10 +66,8 @@ Passing values to smart contract:
 * If we have a smart contract with the function: ```export function getUserClicks(user: string): u64```
 * In the Javascript we pass user info using: ```nearplace.contract.getUserClicks({ user: nearlib.dev.myAccountId }); ```
 
+Events - NEAR doesn't have support for contract logging. I just polled the smart contract like they do in the examples. I'm not sure how practical/scalable this is in real life though.
+
 ## To Do
 
-Tests
-
-Add wallet integration
-
-Event - would be cool to light sign when other people click. This is currently [not supported](https://docs.nearprotocol.com/the_basics/reference-do-things#events) on NEAR.
+Add wallet integration - at the moment I don't want to add a Wallet because I think it would stop people interacting. As far as I can see it would be easy to integrate a NEAR Wallet as the code is nicely done.
