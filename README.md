@@ -10,7 +10,7 @@ My entry to the [NEAR Hackathon](https://nearprotocol.com/hackathon/). As I'm st
 
 The app at this stage has simple functionality but makes use of a lot of the Blockchain properties like persistent storage, accounts and smart contract rules. In the future it can also be extended using ERC721's, etc.
 
-It's basically a clicking game. A click on the main button flashes the message that is currently stored in the contract for 5 seconds. It's meant to be like one of those flashing neon signs and I want it to flash whenever someone clicks (but without event support I'll need to work on that).
+It's basically a clicking game. A click on the main button flashes the message that is currently stored in the contract for 5 seconds. It's meant to be like one of those flashing neon signs and if you have your window open it will flash whenever someone else updates the message and I imagined it flashing like mad if people actually used it :D
 
 Every time the user clicks their count is updated on the blockchain.
 
