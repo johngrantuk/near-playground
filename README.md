@@ -1,8 +1,12 @@
 # My NEAR Playground
 
+![Screenshot](NearScreenshot.png)
+
 ## Intro
 
 [Try It Out](https://johngrantuk.github.io/near-playground/)
+
+[Demo Video](https://www.youtube.com/watch?v=5nPJJvxaziw&feature=youtu.be)
 
 My entry to the [NEAR Hackathon](https://nearprotocol.com/hackathon/). As I'm starting from scratch with NEAR, my initial aim is to try to get up to speed with the tech and build something playful that makes use of Blockchain storage and smart contract based logic. I want to get it deployed and see if anyone interacts with it.
 
@@ -38,7 +42,7 @@ All contract code is found in the assembly/ folder.
 src/main.js is the main app code. A lot of the initial stuff is set-up for the smart contract stuff and can be left as is.
 
 To deploy the contract to NEAR devnet:
-* Setup an account for your contract (I think, to be honest I don't know what this is all about): ```--node_url https://studio.nearprotocol.com/devnet --account_id <yourcontractname>```
+* Setup an account for your contract (I think, to be honest I don't know what this is all about): ```near create_account --node_url https://studio.nearprotocol.com/devnet --account_id <yourcontractname>```
 * Update src/config.js, CONTRACT_NAME, to use <yourcontractname>
 * Now build the contract: ```$ npm run build``` (I think the error messages if something is wrong with the contract are pretty useful which is well done by the NEAR team)
 * Now deploy: ```$ near deploy```
